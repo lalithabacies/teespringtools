@@ -1,0 +1,512 @@
+html,
+body {
+  padding: 0px !important;
+  height: 100%;
+}
+
+.wrap {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
+}
+
+.wrap > .container {
+  padding: 70px 15px 20px;
+}
+
+/************ Footer Begin **************/	
+	.footer {
+	color: #fff !important;
+	position: relative !important;
+	height: 60px !important;
+	background-color: #0AA89E !important;
+	padding: 20px 0px !important;
+	z-index: 1005 !important;
+		}	
+		
+/************ Footer End **************/		
+
+		
+/* .footer {
+  height: 60px;
+  background-color: #282562;
+  border-top: 1px solid #ddd;
+  padding: 20px 0px;
+}
+.footer .container p{
+  color: #fff;
+} */
+
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+.not-set {
+  color: #c55;
+  font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  padding-left: 5px;
+}
+
+a.asc:after {
+  content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+  content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+  content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+  content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+  content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+  content: "\e156";
+}
+
+.grid-view th {
+  white-space: nowrap;
+}
+
+.hint-block {
+  display: block;
+  margin-top: 5px;
+  color: #999;
+}
+
+.error-summary {
+  color: #a94442;
+  background: #fdf7f7;
+  border-left: 3px solid #eed3d7;
+  padding: 10px 20px;
+  margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+  padding: 0px 0px 0px 23px;
+  border: none;
+  color: #282562; 
+}
+
+.logout{
+  color: #FF0000 !important;
+}
+
+.logout:hover{
+  color: #FF0000 !important;
+  text-decoration: none !important;
+}
+
+@media(max-width:767px) {
+  .nav li > form > button.logout {
+    display:block;
+    text-align: left;
+    width: 100%;
+    padding: 10px 15px;
+  }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+  text-decoration: none;
+}
+
+.nav > li > form > button.logout:focus {
+  outline: none;
+}
+button.upload-btn {
+  background: none !important;
+  border: none !important;
+}
+
+/** Open Tickets Page **/
+.row.headings {
+  background-color: #4D525B;
+}
+.row.headings  h5 {
+  padding: 9px 0px;
+}
+.row.headings  h5 a {
+  text-decoration: none;
+  color: #fff;
+}
+.content_list li{
+  display: inline;
+}
+.bid-entries a, .price a, .date a{
+  color: #4D525B;
+}
+.bid-entries a:hover, .price a:hover, .date a:hover{
+  text-decoration: none;
+  color: #4D525B;
+}
+.content_list{
+  padding: 0px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.row.content {
+  border-bottom: 1px solid #eee;
+  padding: 20px 5px;
+}
+.content_list li:after {
+  content: ", ";
+}
+.content_list li:last-child:after {
+  content: "";
+}
+/** Open Tickets Page **/
+
+/** Ticket Detail **/
+.project-list li{
+  display: inline;
+}
+.project-list strong {
+  padding: 0px 9px;
+}
+.project-list{
+  padding: 0px 0px 20px 0px;
+}
+.skills-req{
+  margin-top: 20px;
+}
+.skills a{
+  color: #4D525B;
+}
+.skills a:hover{
+  text-decoration: none;
+}
+p.skills {
+  border-radius: 3px;
+  width: 47%;
+  padding: 5px 7px;
+  border: 1px solid #BEC0C2;
+}
+.project-title {
+  border-bottom: 1px solid #DEDEDE;
+}
+.project-description{
+  margin: 32px 0 16px;
+}
+.project-description p {
+  margin: 0 0 37px;
+}
+.glyphicon-file {
+  font-size: 25px;
+}
+.file-attach p {
+  padding-bottom:10px;
+  border-bottom: 1px solid #eee;
+  margin: 15px 0px 15px 0px;
+}
+.claim-ticket button.btn.btn-default {
+  outline: none;
+}
+
+/** Ticket Detail Ends **/
+
+/** Ticket Claim **/
+body {
+  padding : 10px ;
+}
+#exTab1 .tab-content {
+  color : black;
+  padding : 5px 15px;
+}
+.project-list li{
+  display: inline;
+}
+.project-list strong {
+  padding: 0px 9px;
+}
+.project-list{
+  padding: 0px 0px 20px 0px;
+}
+.skills-req{
+  margin-top: 20px;
+}
+.skills a{
+  color: #4D525B;
+}
+.skills a:hover{
+  text-decoration: none;
+}
+p.skills {
+  border-radius: 3px;
+  width: 47%;
+  padding: 5px 7px;
+  border: 1px solid #BEC0C2;
+}
+.project-title {
+  border-bottom: 1px solid #DEDEDE;
+}
+.project-description{
+  margin: 32px 0 16px;
+}
+.project-description p {
+  margin: 0 0 37px;
+}
+.glyphicon-file {
+  font-size: 25px;
+}
+.file-attach p {
+  padding-bottom:10px;
+  border-bottom: 1px solid #eee;
+  margin: 15px 0px 15px 0px;
+}
+.claim-ticket button.btn.btn-default {
+  outline: none;
+}
+.container{
+  padding-bottom: 20px;
+}
+.project .col-md-8,.project .col-md-4{
+  padding: 0px;
+}
+.profile-pic{
+  width: 100px;
+  height: 100px;
+  margin-left:-15px;
+}
+.post-messages {
+  border: 1px solid #eee;
+  height: 100px;
+  overflow: auto;
+}
+div.message {
+  margin: 25px -16px;
+}
+.row.conversations {
+  padding: 20px 0px;
+}
+.conversations .file-attach p{
+  border-bottom: none;
+}
+.conversations {
+  padding: 18px 0px;
+}
+.profile-image{
+ height: 60px;
+ margin-left: -15px;
+ width: 100%;
+}
+/***** Ticket Claim Ends *****/	
+/***** POP UP Design Begins *****/	
+.modal-header{
+  background-color: #C9E84A;
+}
+.btn-default.focus, .btn-default:focus {
+ outline: none; 
+}
+/***** POP UP Design Ends *****/	   
+
+/***** Mutile upload file Design Begins *****/	 
+.upload {
+  border: 1px solid #ccc;
+  height: 36px;
+  border-radius: 4px;
+}
+.upload input[type="file"] {
+  margin-top: 6px;
+}
+.upload .col-md-6 .btn-info {
+  margin-left: 87%;
+}
+/***** Mutile upload file Design Begins *****/		
+
+
+/***** Header Starts ******/
+
+nav#w1, #w0 {
+  background: #fff;
+  border-color: #EDEFF3;
+}
+#w2 li a, #w1 li a{
+  color: #282562; 
+}
+#w2 li a:hover, #w1 li a:hover {
+  color: #ee2761;
+  transition: color 100ms;
+}
+.dropdown-toggle {
+  letter-spacing: 0.3px;
+  font-size: 13px;
+  color: #282562;
+  outline: none;
+}
+.dropdown-menu li a{
+  font-size: 13px;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover {
+  color: #282562;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: 0.3px;
+}
+.container{
+  padding-bottom: 0px;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  color: #282562;
+  background: none;
+}
+.dropdown-menu > li > a:focus {
+  outline: none;
+}
+.dropdown-menu > .active > a:hover {
+  background: none;
+}
+.dropdown-menu > .active > a {
+  background: none;
+
+
+
+/***** Header Ends ******/
+
+/********** New Change In Search page *********/
+	.select-marketers, .select-tickets {
+			margin-top: 8px;
+			padding: 5px;
+			margin-left: 16px;
+		}
+		.report-btn{
+			margin-top: 10px;
+			float:right;
+			background-color: #0AA89E;
+			color: #FFFF4A;
+		}
+		.report-btn:hover{
+			background-color: #0AA89E;
+			color: #FFFF4A;
+		}
+
+		#search-box {
+			position: relative;
+			border:1px solid #ccc;
+			width: 28%;
+			float: right;
+			margin-bottom: 21px;
+		}
+
+		#search-form {
+			height: 30px;
+			background-color: #fff;
+			overflow: hidden;
+		}
+
+		#search-text{
+
+			color: #ddd;
+			border-width: 0;
+			background: transparent;line-height:15px;
+		}
+
+		#search-box input[type="text"] {
+			width: 90%;
+			padding: 10px 0 5px 1em;
+			color: #333;
+			outline: none;
+		}
+
+		#search-button {
+			font-size: 11px !important;
+			position: absolute;
+			right:0px;
+			height: 30px;
+			width: 106px;
+			color: #FFFF4A;
+			text-align: center;
+			border-width: 0;
+			background-color: #0AA89E;
+			cursor: pointer;
+			text-transform:uppercase;
+		}
+
+
+		.ticket-management{
+			clear: both;
+		}
+		.ticket-management a {
+			text-decoration: none !important;
+		}
+		.ticket-management table{
+			margin-bottom: 0px;
+		}
+/********* End ******************/
+
+
+/************ Ticket Design Begin **************/
+
+    .back-button{
+      margin: 10px 0px;
+    }
+    .ticketdetail th {
+      width: 200px;
+      text-align: left;
+      padding: 20px 10px 20px 0;
+    }
+    .savechanges-btn, .update-btn{
+      margin-bottom:10px;
+    }
+    .singleticket-tab{
+      margin-top: 15px;
+    }
+    .update-ticket-table td{
+      border-top: none !important;
+    }
+    .update-ticket-table{
+      margin-bottom: 0px;
+    }
+    .table>thead>tr>th {
+      vertical-align: bottom;
+      border-bottom: 1px solid #ddd;
+    }
+   #message {
+    width: 0px !important;
+}
+    .reply-form{
+      margin-top: 22px;
+    }
+    .reply-form th{
+      width: 200px;
+    }
+    .reply-form td{
+      padding: 20px;
+    }
+	
+/************ Ticket Design End **************/
+
+
+.valid-star-color {
+    color:red !impotant; 
+}
+
+.valid-2 {
+    color:#ff0505 !impotant; 
+}
