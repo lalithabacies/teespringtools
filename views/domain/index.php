@@ -27,41 +27,48 @@ $status_array = array(1=>"Enable",0=>"Disable");
 	
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+       // 'filterModel' => $searchModel,
         'columns' => [
 		
-			 [	
+			[	
 					'class' => 'yii\grid\CheckboxColumn',
-					 'checkboxOptions' => function ($data){
+					'checkboxOptions' => function ($data){
 						return ['checked' =>false,'value'=>$data['id']];
-					}, 
-				
+					}, 				
+			],
+	
+			[	
+				'attribute' => 'name',
+				'label' => 'Domain Name',
+				'value' => function ($model){
+						return $model->name;
+                      },	
 			],
 			
-          //  'id',
-          //  'userid',
-            'name',
-			
-           [	
+            [	
 				'attribute' => 'description',
+				'label' => 'App Details',
 				'format' => 'raw',
 				'value' => function ($model){
 						return $model->description;
                       },	
 			],
 			
-           [
-				'attribute' => 'status',
-				'value' => function ($model)use($status_array){
-					return ($model->status == 1)?"Enable":"Disable";
-                                },		
-				 'filter' => Html::activeDropDownList($searchModel, 'status',$status_array ,['class'=>'form-control input-sm','prompt' => '--status--']), 
-			
+			[	
+				'attribute' => 'applink',
+				'label' => 'DNS Target',
+				'value' => 'appDetails.applink',
 			],
 			
+			[	
+				'attribute' => 'date',
+				'label' => 'Date',
+				'format' => 'raw',
+				'value' => function ($model){
+						return date('d-M-Y H:i A',strtotime($model->date));
+                      },	
+			],
 			
-            // 'date',
-
             ['class' => 'yii\grid\ActionColumn','template' => '{update}{delete}',],
         ],
     ]); ?>

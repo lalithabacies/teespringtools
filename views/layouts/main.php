@@ -7,11 +7,14 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 AppAsset::register($this);
 
-/* use app\assets\AppAssetdefault;
-AppAssetdefault::register($this); */
-
 use yii\helpers\Url;
 $baseUrl = Url::home(true);
+$user = "";
+
+
+if(!Yii::$app->user->isGuest)  { 
+$user = app\models\UserProfile::findOne(Yii::$app->user->id);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -58,15 +61,23 @@ $baseUrl = Url::home(true);
 						<li class="dropdown">
 						<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">							
 							<span class="profile-info">
-								<?php echo \Yii::$app->user->id; ?>			
+								<?php if(isset($user->fullname))
+										echo $user->fullname;
+									?>		
 							</span>
 						</a>
 						<ul class="dropdown-menu animation-dock">
 							<?php if(!Yii::$app->user->isGuest)  { ?>
-							<li><a href="<?= Url::to(["user/my-profile"]); ?>">My profile</a></li>							
+							<li><a href="<?= Url::to(["user/my-profile"]); ?>">My profile</a></li>	
+						   <li><a href="<?= Url::to(["site/changepwd"]); ?>">Change Password</a></li>							
 							<?php } ?>
 							<li>
-						
+							<?php 
+								echo Html::beginForm(['/site/logout'], 'get');
+								echo Html::submitButton('<i class="fa fa-fw fa-power-off text-danger"></i>Logout',['class' => 'btn btn-link logout']);
+							    echo Html::endForm();
+								
+								?>
 								
 							</li>
 						</ul><!--end .dropdown-menu -->

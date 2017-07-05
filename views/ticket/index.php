@@ -92,14 +92,3 @@ $status_array = array(1=>"Opened",0=>"Closed");
         ],
     ]); ?>
 </div>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		$( "#app_filter" ).change(function() {
-			$id = $(this).val();
-			window.location.href = "<?php echo Yii::$app->homeUrl; ?>ticket/index?id="+$id ;
-		});
-	});
-
-</script>

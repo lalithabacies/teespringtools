@@ -8,7 +8,9 @@ use app\models\search\ManageKeySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
+use yii\web\Session;
+use app\components\AccessRule;
 /**
  * ManageKeyController implements the CRUD actions for ManageKey model.
  */
@@ -20,6 +22,22 @@ class ManagekeyController extends Controller
     public function behaviors()
     {
         return [
+		
+		 'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(), //custom accessRules
+                ],
+                'only' => ['index', 'view', 'create', 'delete', 'update'], //only be applied to
+                'rules' => [                    
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'delete', 'update'],
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+			
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

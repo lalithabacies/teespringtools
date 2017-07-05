@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 				</div>
 				<div class="form-group">
-					<a href="?page=view_blogs">
+					<a href="<?= Url::to(["blog/index-blog"]); ?>">
 						<button type="button" class="btn btn-info">
 							<i class="md-navigate-before"></i> BACK
 						</button>

@@ -17,8 +17,7 @@ $total_page	= ceil($noofuserroles/$per_page);
 $page_no    = isset($_GET['pno'])?$_GET['pno']:0;
 $pdata		='';
 $start		= ($page_no>$per_page)?($page_no-$per_page):1;
-$total_page	= (($start+$per_page)>$total_page)?$total_page:($page_no+$per_page);
-
+$total_page	= (($start+$per_page)>$total_page)?$total_page:(($page_no+$per_page)>$total_page)?$total_page:($page_no+$per_page);
 ?>
 <div class="user-profile-index">
 

@@ -5,16 +5,15 @@ namespace app\controllers;
 use Yii;
 
 use app\models\AppList;
-
 use app\models\search\AppListSearch;
-
 use yii\web\Controller;
-
 use yii\web\UploadedFile;
-
 use yii\web\NotFoundHttpException;
-
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\Session;
+use app\components\AccessRule; //custom accessRules
+
 
 /**
  * AppListController implements the CRUD actions for AppList model.
@@ -27,6 +26,21 @@ class ApplistController extends Controller
     public function behaviors()
     {
         return [
+		 'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(), //custom accessRules
+                ],
+                'only' => ['index', 'view', 'create', 'delete', 'update'], //only be applied to
+                'rules' => [                    
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'delete', 'update'],
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+			
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

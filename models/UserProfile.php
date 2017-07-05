@@ -20,6 +20,9 @@ use Yii;
  */
 class UserProfile extends \yii\db\ActiveRecord
 {
+	
+	public $confirmpassword;
+		
     /**
      * @inheritdoc
      */
@@ -34,14 +37,18 @@ class UserProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'email', 'firstname', 'lastname', 'phone'], 'required'],
+            [['username', 'password', 'email', 'firstname', 'lastname', 'phone','confirmpassword'], 'required'],
             [['created_date', 'last_date'], 'safe'],
-            [['username', 'password', 'email', 'firstname', 'lastname', 'phone'], 'string', 'max' => 150],
+            [['username', 'firstname', 'lastname'], 'string', 'max' => 150],
+			[['password','confirmpassword'], 'string', 'min' => 6],
+			[['email'],'email'],
+			[['phone'], 'integer'],
 			
 			[['username'], 'unique','targetClass' => '\app\models\UserProfile', 'message' => 'This Username has already been taken.'],
 		
 		  [['email'], 'unique','targetClass' => '\app\models\UserProfile', 'message' => 'This email address has already been taken.' ],  
 		  
+		   ['confirmpassword', 'compare','compareAttribute'=>'password'], 
         ];
     }
 
@@ -55,6 +62,7 @@ class UserProfile extends \yii\db\ActiveRecord
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
+            'confirmpassword' => 'Confirm Password',
             'email' => 'Email',
             'firstname' => 'Firstname',
             'lastname' => 'Lastname',
@@ -233,4 +241,22 @@ class UserProfile extends \yii\db\ActiveRecord
 		);
 	} 
 
+	
+	/**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {        
+        foreach (self::$users as $user) {          
+            if (strcasecmp($user['username'], $username) === 0) {
+                return new static($user);
+            }
+        }
+
+        return null;
+    }
+	
 }

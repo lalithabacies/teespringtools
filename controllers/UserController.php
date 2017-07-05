@@ -4,11 +4,16 @@ namespace app\controllers;
 
 use Yii;
 use app\models\UserProfile;
+use app\models\UserRole;
+use app\models\Roles;
 use app\models\TrackUsers;
 use app\models\search\UserProfileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\Session;
+use app\components\AccessRule;
 
 /**
  * UserController implements the CRUD actions for UserProfile model.
@@ -21,6 +26,21 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+		'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(), //custom accessRules
+                ],
+                'only' => ['index', 'view', 'create', 'delete', 'update'], //only be applied to
+                'rules' => [                    
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'delete', 'update'],
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+			
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -65,8 +85,14 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new UserProfile();
-
+		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			
+			$role = Roles::find()->where(['default_access'=>1])->one();
+			$userrole = new UserRole();
+			$userrole->roleid = $role->id;
+			$userrole->userid = $model->id;
+			$userrole->save();	
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

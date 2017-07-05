@@ -1,7 +1,7 @@
 <?php 
 
 use yii\helpers\Url;
-
+$session = Yii::$app->session;
 
 ?>
 
@@ -14,6 +14,7 @@ use yii\helpers\Url;
 							<span class="title">Dashboard</span>
 						</a>
 					</li>
+				<?php if(!empty($session['isAdmin'])){ ?>	
 					<li class="gui-folder">
 						<a>
 							<div class="gui-icon"><i class="md md-person"></i></div>
@@ -24,7 +25,14 @@ use yii\helpers\Url;
 							<li><a href="<?= Url::to(["user/create"]); ?>" ><span class="title">Add User</span></a></li>							
 						</ul>
 					</li>
-					
+				<?php } else { ?>
+					<li>
+						<a href="<?= Url::to(["user/user-log"]); ?>" >
+							<div class="gui-icon"><i class="md md-person"></i></div>
+							<span class="title">User Mangement</span>
+						</a>
+					</li>
+				<?php } ?>	
 					<li>
 						<a href="<?= Url::to(["domain/index"]); ?>" >
 							<div class="gui-icon"><i class="md md-laptop"></i></div>
@@ -45,7 +53,7 @@ use yii\helpers\Url;
 							<span class="title">Blogs</span>
 						</a>
 					</li>
-					
+					<?php if(!empty($session['isAdmin'])){ ?>
 					<li>
 						<a href="<?= Url::to(["site/home"]); ?>" >
 							<div class="gui-icon"><i class="fa md-apps fa-fw"></i></div>
@@ -65,13 +73,13 @@ use yii\helpers\Url;
 					
 					<li class="gui-folder">
 						<a>
-							<div class="gui-icon"><i class="glyphicon glyphicon-user"></i></div>
+							<div class="gui-icon"><i class="md md-accessibility"></i></div>
 							<span class="title">User Roles Management</span>
 						</a>
 						<ul>
 						<li><a href="<?= Url::to(["roles/settings"]); ?>" ><span class="title">Role Setting</span></a></li>
 						<li><a href="<?= Url::to(["roles/details"]); ?>" ><span class="title">Role Details</span></a></li>
-						<li><a href="<?= Url::to(["roles"]); ?>" ><span class="title">Default Role Settings</span></a></li>
+						<li><a href="<?= Url::to(["roles/index"]); ?>" ><span class="title">Default Role Settings</span></a></li>
 						<li><a href="<?= Url::to(["roles/user-roles"]); ?>" ><span class="title">User Role</span></a></li>
 					
 						</ul>
@@ -105,8 +113,10 @@ use yii\helpers\Url;
 						</a>
 					</li>
 					
+					<?php } ?>
+					
 					<li>
-						<a href="#" >
+						<a href="<?= Url::to(["site/logout"]); ?>">
 							<div class="gui-icon"><i class="fa fa-fw fa-power-off"></i></div>
 							<span class="title">Logout</span>
 						</a>

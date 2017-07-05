@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 
+use app\models\DomainMap;
+
+
 /**
  * This is the model class for table "retarget_apps".
  *
@@ -57,4 +60,13 @@ class DomainApps extends \yii\db\ActiveRecord
             'modifydate' => 'Modifydate',
         ];
     }
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMapDetails()
+    {
+        return $this->hasOne(DomainMap::className(), ['appid' => 'id']);
+    }
+	
 }

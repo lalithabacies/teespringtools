@@ -6,14 +6,15 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Domain;
-use app\models\DomainApps as Apps;
-use app\models\DomainMap as Maps;
+
 
 /**
  * DomainSearch represents the model behind the search form about `app\models\Domain`.
  */
 class DomainSearch extends Domain
 {
+	public $applink;
+	
     /**
      * @inheritdoc
      */
@@ -21,7 +22,7 @@ class DomainSearch extends Domain
     {
         return [
             [['id', 'userid', 'status'], 'integer'],
-            [['name', 'description', 'date'], 'safe'],
+            [['name', 'description', 'date','applink'], 'safe'],
         ];
     }
 
@@ -43,7 +44,7 @@ class DomainSearch extends Domain
      */
     public function search($params)
     {
-        $query = Domain::find();
+        $query = Domain::find()->where(['retarget_domain.userid'=>Yii::$app->user->id])->orderBy('retarget_domain.id DESC');
 
         // add conditions that should always apply here
 
@@ -51,6 +52,8 @@ class DomainSearch extends Domain
             'query' => $query,
         ]);
 
+		$query->joinWith(['appDetails as app']);
+		$query->joinWith(['appDetails.mapDetails as map']);
        
         $this->load($params);
 
@@ -69,6 +72,7 @@ class DomainSearch extends Domain
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+			->andFilterWhere(['like', 'applink', $this->applink])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

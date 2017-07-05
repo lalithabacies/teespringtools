@@ -65,10 +65,10 @@ class DomainController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-		
+    {		
         $model = new Domain();
 		$setting = new Setting();
+		$setting1 = new Setting();
 		$apps = new Apps();
 		$maps = new Maps();
         if (($model->load(Yii::$app->request->post())) && ($setting->load(Yii::$app->request->post()))) {
@@ -77,6 +77,12 @@ class DomainController extends Controller
 		   
 		   if($model->save()){
 			   
+			    $setting1->userid = $model->userid;
+				$setting1->skey = 'publicdomainNameLinkId_key_'.$model->id;
+				$setting1->sval = $setting->publicdomainNameLinkId;
+				$setting1->save(false);
+				
+				
 			    if($setting->publicdomainNameLinkId == 1)
 				{
 					
@@ -85,15 +91,7 @@ class DomainController extends Controller
 				$setting->sval = $model->id;
 				$setting->save(false);
 				
-				} else 
-				{
-					
-			    $setting->userid = $model->userid;
-				$setting->skey = 'publicdomainNameLinkId_key_'.$model->id;
-				$setting->sval = $setting->publicdomainNameLinkId;
-				$setting->save(false);
 				}
-				
 				
 				
 				$al_heroku_common_app_name = Yii::$app->params['al_heroku_common_app_name'];
@@ -140,7 +138,10 @@ class DomainController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-		$setting = Setting::find()->where(['sval'=>$id])->orWhere(['skey'=>"publicdomainNameLinkId_key_".$id])->one();
+		$setting = Setting::find()->where(['sval'=>$id])->one();
+		if(!$setting)
+			$setting = new Setting();
+		
 		
 		if (($model->load(Yii::$app->request->post())) && ($setting->load(Yii::$app->request->post()))) {
 			
@@ -148,6 +149,12 @@ class DomainController extends Controller
 			 
 			  if($model->save()){
 			   
+			   	
+			   /*  $setting->userid = $model->userid;
+				$setting->skey = 'publicdomainNameLinkId_key_'.$id;
+				$setting->sval = $setting->publicdomainNameLinkId;
+				$setting->save(false); */
+				
 			    if($setting->publicdomainNameLinkId == 1)
 				{
 					
@@ -158,11 +165,7 @@ class DomainController extends Controller
 				
 				} else 
 				{
-					
-			    $setting->userid = $model->userid;
-				$setting->skey = 'publicdomainNameLinkId_key_'.$id;
-				$setting->sval = $setting->publicdomainNameLinkId;
-				$setting->save(false);
+					$setting->delete();
 				}
 				
 				

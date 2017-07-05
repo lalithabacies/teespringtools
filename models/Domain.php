@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 
+use app\models\DomainApps;
+
 /**
  * This is the model class for table "retarget_domain".
  *
@@ -52,4 +54,14 @@ class Domain extends \yii\db\ActiveRecord
             'date' => 'Date',
         ];
     }
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAppDetails()
+    {
+        return $this->hasOne(DomainApps::className(), ['domainid' => 'id']);
+    }
+	
+	
 }

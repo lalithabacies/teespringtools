@@ -1,4 +1,6 @@
 <?php
+use yii\helpers\Url;
+
 $this->title =  Yii::$app->params['sitetitle'];
 ?>
 <div class="main_page container">
@@ -9,6 +11,21 @@ $this->title =  Yii::$app->params['sitetitle'];
 <h4>Teespring is a platform that makes it easy for anyone to create and 
 sell high quality product with no cost or risk. Teespring Tools is a 
 suite of tools that will make your selling tasks easier and quicker to get done.</h4>
+
+<?php 
+
+		if(Yii::$app->session->hasFlash('RegisterFormSubmitted')){ ?>
+
+        <div class="alert alert-success">
+            Your Registration Has Been Successfully Completed. 
+        </div>
+
+    <?php } else if(Yii::$app->session->hasFlash('success')){ ?>
+		<div class="alert alert-success">
+            <?= Yii::$app->session->getFlash('success'); ?>
+        </div>
+	<?php } ?>	
+	
 </section>
 
 <section class="section-account col-sm-4 col-md-4">
@@ -18,6 +35,8 @@ suite of tools that will make your selling tasks easier and quicker to get done.
     <div class="col-sm-12 user-login">
     <br>    
     
+	 
+	
     <form action="http://dev-tshirtbomb.com/site/index" class="form floating-label">
         <div class="form-group">
         <input type="text" name="username" id="username" class="form-control">
@@ -40,9 +59,9 @@ suite of tools that will make your selling tasks easier and quicker to get done.
         </label>
         </div>
         </div>
-        <p class="help-block col-sm-6 col-md-6" id="forgot_pass"><a href="#">Forgot Password?</a></p>
+        <p class="help-block col-sm-6 col-md-6" id="forgot_pass"><a href="<?= Url::to(["site/request-password-reset"]); ?>">Forgot Password?</a></p>
         </div><!--end .row -->
-        <p class="new_register">Didn't have account? <a class="new_user_login" href="#">Register here</a></p>
+        <p class="new_register">Didn't have account? <a class="new_user_login" href="<?= Url::to(["site/signup"]); ?>">Register here</a></p>
         <input type="hidden" value="login" name="page">
         <input type="hidden" value="test" name="abacies" data-myAttri="deep">
     </form>
