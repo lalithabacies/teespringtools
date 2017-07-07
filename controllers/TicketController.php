@@ -117,10 +117,10 @@ class TicketController extends Controller
 				$model->image = UploadedFile::getInstance($model, 'image');
 				
 				if(!empty($model->image)) { 
-					 if(!$model->uploadImage())
-						return; 
+					/* if(!$model->uploadImage())
+						return; */
 					
-						/* $time = time();
+						$time = time();
 						$model->image->saveAs(Yii::$app->params['web_ticketimg'].$time.$model->image);
                        
 						//$tmp_filename = $model->image->tempName;
@@ -133,7 +133,7 @@ class TicketController extends Controller
                         $s = new Storage();
                         $result = $s->upload($bucket,$keyname,$filepath);
                         $s3_filename = $result['ObjectURL'];  	
-                        $model->image=$s3_filename; */
+                        $model->image=$s3_filename;
 													
 				} 
 				
