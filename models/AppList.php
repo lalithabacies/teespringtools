@@ -64,10 +64,10 @@ class AppList extends \yii\db\ActiveRecord
         ];	
     }
 	
-	public function uploadImage(){
+/* 	public function uploadImage(){
 			$this->image_link->saveAs('uploads/appimage/'.time().$this->image_link->baseName.'.' .$this->image_link->extension);
 			$this->image_link = 'uploads/appimage/'.time().$this->image_link->baseName.'.'.$this->image_link->extension;
 			return true;
-	}
+	} */
 	
 }

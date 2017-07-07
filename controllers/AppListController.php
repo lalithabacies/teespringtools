@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Session;
 use app\components\AccessRule; //custom accessRules
-
+use app\models\Storage;
 
 /**
  * AppListController implements the CRUD actions for AppList model.
@@ -92,8 +92,24 @@ class ApplistController extends Controller
 				$model->image_link = UploadedFile::getInstance($model, 'image_link');
 				
 				if(!empty($model->image_link)) { 
-					if(!$model->uploadImage())
-						return;
+					/* if(!$model->uploadImage())
+						return; */
+					
+						$time = time();
+						$model->image_link->saveAs(Yii::$app->params['web_appimg'].$time.$model->image_link);
+                       
+						//$tmp_filename = $model->image_link->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_appimg'].preg_replace('/\s+/', '', $time.$model->image_link);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_appimg'].$time.$model->image_link;
+                        $file_ext =  pathinfo($model->image_link, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model->image_link=$s3_filename;
+						
 								
 				} 
 					
@@ -127,8 +143,25 @@ class ApplistController extends Controller
 			
 				$model->image_link = UploadedFile::getInstance($model, 'image_link');										
 				if(!empty($model->image_link)){ 
-					if(!$model->uploadImage())
-						return;
+					/* if(!$model->uploadImage())
+						return; */
+					
+						
+						$time = time();
+						$model->image_link->saveAs(Yii::$app->params['web_appimg'].$time.$model->image_link);
+                       
+						//$tmp_filename = $model->image_link->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_appimg'].preg_replace('/\s+/', '', $time.$model->image_link);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_appimg'].$time.$model->image_link;
+                        $file_ext =  pathinfo($model->image_link, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model->image_link=$s3_filename;
+						
 				}
 			 else
 				{										

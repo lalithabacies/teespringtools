@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
 			[
                 'attribute'=>'Image Link',
-				'value'=>!empty($model->image_link)?Yii::$app->homeUrl.$model->image_link:'',
+				'value'=>!empty($model->image_link)?$model->image_link:'',
 				 'format' => !empty($model->image_link)?['image',['height'=>'100px']]:'text',
 				
             ],

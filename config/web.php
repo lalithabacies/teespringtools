@@ -39,6 +39,15 @@ $config = [
             ],
         ],
         'db' => $db,
+		'awssdk' => [
+            'class' => 'fedemotta\awssdk\AwsSdk',
+            'credentials' => [ //you can use a different method to grant access
+                'key' => 'AKIAJTJ744YGDWF7CXDQ',
+                'secret' => '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',
+            ],
+            'region' => 'us-west-2', //i.e.: 'us-east-1'
+            'version' => 'latest', //i.e.: 'latest'
+        ],
         
         'urlManager' => [            
             'enablePrettyUrl' => true,

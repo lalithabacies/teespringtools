@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			[
                 'attribute'=>'Blog Image',
-				'value'=>!empty($model->blogimage)?Yii::$app->homeUrl.$model->blogimage:'',
+				'value'=>!empty($model->blogimage)?$model->blogimage:'',
 				 'format' => !empty($model->blogimage)?['image',['height'=>'100px']]:'text',
 				
             ],

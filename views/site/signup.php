@@ -46,6 +46,7 @@ $roles = \yii\helpers\ArrayHelper::map(\app\models\Roles::find()->orderBy('id AS
 
     <div class="form-group">
         <?= Html::submitButton('Register', ['class' =>'btn btn-success']) ?>
+		<?= Html::a('Cancel', ['site/login'], ['class'=>'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

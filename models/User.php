@@ -160,5 +160,24 @@ class User extends ActiveRecord implements IdentityInterface
         );
         self::$users[$id] = $aa;
     }    
+	
+	public function afterDelete()
+    {
+		print"<script>also('afterdelete')</script>";
+        parent::afterDelete();
+        $transaction = $connection->beginTransaction();
+        try {
+            $tsa=TshirtAccess::find()->where(['=','userid',$this->id])->deleteAll();
+			print"<script>also('".$tsa."')</script>";
+			UserRole::find()->where(['=','userid',$this->id])->deleteAll();
+			TrackUsers::find()->where(['=','userid',$this->id])->deleteAll();
+			UsersActivity::find()->where(['=','userid',$this->id])->deleteAll();
+			TshirtUserMeta::find()->where(['=','userid',$this->id])->deleteAll();
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            //throw $e;
+        }
+    }
     
 }
