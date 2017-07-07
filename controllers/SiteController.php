@@ -206,6 +206,7 @@ class SiteController extends Controller
 		
 	if ($model->load(Yii::$app->request->post()) && $model->validate() && $role->load(Yii::$app->request->post())) {
 			$model->status = 1;
+			$model->last_date = date('Y-m-d');
             if($model->save())
             {      
 				$userrole = new UserRole();
