@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 	
 	<?php if(!empty($model->image_link)) {  ?>
-		 <img src="<?= \Yii::$app->homeUrl.$model->image_link;?>" width="150" height="150" />
+		 <img src="<?=$model->image_link;?>" width="150" height="150" />
 	<?php } ?>
 	
 	<?= $form->field($model, 'image_link')->fileInput(['class' => 'form-control']) ?>

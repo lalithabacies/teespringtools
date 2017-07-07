@@ -13,6 +13,7 @@ use yii\web\UploadedFile;
 use yii\filters\AccessControl;
 use yii\web\Session;
 use app\components\AccessRule;
+use app\models\Storage;
 
 /**
  * BlogController implements the CRUD actions for Blogs model.
@@ -102,8 +103,21 @@ class BlogController extends Controller
 				$model->blogimage = UploadedFile::getInstance($model, 'blogimage');
 				
 				if(!empty($model->blogimage)) { 
-					if(!$model->uploadImage())
-						return;
+						$time = time();
+						$model->blogimage->saveAs(Yii::$app->params['web_blogimg'].$time.$model->blogimage);
+                       
+						//$tmp_filename = $model->blogimage->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_blogimg'].preg_replace('/\s+/', '', $time.$model->blogimage);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_blogimg'].$time.$model->blogimage;
+                        $file_ext =  pathinfo($model->blogimage, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model->blogimage=$s3_filename;			
+					
 								
 				} 
 				$model->createddate = $model->modifieddate = date('Y-m-d H:i:s');
@@ -135,8 +149,21 @@ class BlogController extends Controller
 			
             $model->blogimage = UploadedFile::getInstance($model, 'blogimage');										
 				if(!empty($model->blogimage)){ 
-					if(!$model->uploadImage())
-						return;
+					$time = time();
+						$model->blogimage->saveAs(Yii::$app->params['web_blogimg'].$time.$model->blogimage);
+                       
+						//$tmp_filename = $model->blogimage->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_blogimg'].preg_replace('/\s+/', '', $time.$model->blogimage);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_blogimg'].$time.$model->blogimage;
+                        $file_ext =  pathinfo($model->blogimage, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model->blogimage=$s3_filename;
+						
 				}
 			 else
 				{										

@@ -24,7 +24,7 @@ use dosamigos\ckeditor\CKEditor;
     ]); ?>	
 	
 	<?php if(!empty($model->blogimage)) {  ?>
-		 <img src="<?= \Yii::$app->homeUrl.$model->blogimage;?>" width="150" height="150" />
+		 <img src="<?= $model->blogimage;?>" width="150" height="150" />
 	<?php } ?>
 	
 	

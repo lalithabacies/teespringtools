@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								<?php
 									if($model->blogimage) {
 								?>
-									<img src="<?=Yii::$app->homeUrl.$model->blogimage?>" class="img-responsive" style="max-width:200px">
+									<img src="<?=$model->blogimage?>" class="img-responsive" style="max-width:200px">
 								<?php 
 									} else {
 								?>

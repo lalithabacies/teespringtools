@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\TshirtAccess;
 use app\models\UserProfile;
 use app\models\UserRole;
 use app\models\Roles;
@@ -14,6 +15,8 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Session;
 use app\components\AccessRule;
+use app\models\UsersActivity;
+use app\models\TshirtUserMeta;
 
 /**
  * UserController implements the CRUD actions for UserProfile model.
@@ -110,8 +113,7 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -129,7 +131,21 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+		$connection = Yii::$app->getDb();
+		$transaction = $connection->beginTransaction();
+        try {
+            $tsa=TshirtAccess::find()->where(['=','userid',$this->id])->all();
+			$tsa->delete();
+			UserRole::find()->where(['=','userid',$this->id])->deleteAll();
+			TrackUsers::find()->where(['=','userid',$this->id])->deleteAll();
+			UsersActivity::find()->where(['=','userid',$this->id])->deleteAll();
+			TshirtUserMeta::find()->where(['=','userid',$this->id])->deleteAll();
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            //throw $e;
+        }
+		
         return $this->redirect(['index']);
     }
 

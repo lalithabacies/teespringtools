@@ -12,6 +12,10 @@ $this->title =  Yii::$app->params['sitetitle'];
 sell high quality product with no cost or risk. Teespring Tools is a 
 suite of tools that will make your selling tasks easier and quicker to get done.</h4>
 
+<div id="loading" style="display:none;">
+		 <p><img src="images/loading.gif" /> Please Wait</p>
+</div>
+	
 <?php 
 
 		if(Yii::$app->session->hasFlash('RegisterFormSubmitted')){ ?>
@@ -35,7 +39,7 @@ suite of tools that will make your selling tasks easier and quicker to get done.
     <div class="col-sm-12 user-login">
     <br>    
     
-	 
+	
 	
     <form action="http://dev-tshirtbomb.com/site/index" class="form floating-label">
         <div class="form-group">

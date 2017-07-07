@@ -72,11 +72,11 @@ class Blogs extends \yii\db\ActiveRecord
         ];
     }
 	
-	public function uploadImage(){
+/* 	public function uploadImage(){
 			$this->blogimage->saveAs('uploads/blogimage/'.time().$this->blogimage->baseName.'.' .$this->blogimage->extension);
 			$this->blogimage = 'uploads/blogimage/'.time().$this->blogimage->baseName.'.'.$this->blogimage->extension;
 			return true;
-	}
+	} */
 	
 	/**
      * @return \yii\db\ActiveQuery

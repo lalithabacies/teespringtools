@@ -21,7 +21,7 @@ $status_array = array(1=>"Opened",0=>"Closed");
     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
 
 	<?php if(!empty($model->image)) {  ?>
-		 <img src="<?= \Yii::$app->homeUrl.$model->image;?>" width="150" height="150" />
+		 <img src="<?=$model->image;?>" width="150" height="150" />
 	<?php } ?>	
 	
     <?= $form->field($model, 'image')->fileInput(['class' => 'form-control']) ?>

@@ -32,7 +32,8 @@ if(isset($sessioncheck) && !empty($sessioncheck)) { ?>
                 <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
+					<?= Html::a('Cancel', ['site/login'], ['class'=>'btn btn-primary']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

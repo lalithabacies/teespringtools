@@ -61,11 +61,11 @@ class TicketsMessage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(UserProfile::className(), ['id' => 'userid']);
     }
-	
+/* 	
 	public function uploadImage(){
 			$this->attachment->saveAs('uploads/ticketimage/'.time().$this->attachment->baseName.'.' .$this->attachment->extension);
 			$this->attachment = 'uploads/ticketimage/'.time().$this->attachment->baseName.'.'.$this->attachment->extension;
 			return true;
-	}
+	} */
 	
 }

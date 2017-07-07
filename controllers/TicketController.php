@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use app\models\Storage;
 
 //use app\models\TicketsMessage;
 /**
@@ -116,8 +117,24 @@ class TicketController extends Controller
 				$model->image = UploadedFile::getInstance($model, 'image');
 				
 				if(!empty($model->image)) { 
-					if(!$model->uploadImage())
-						return;								
+					/* if(!$model->uploadImage())
+						return; */
+					
+						$time = time();
+						$model->image->saveAs(Yii::$app->params['web_ticketimg'].$time.$model->image);
+                       
+						//$tmp_filename = $model->image->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_ticketimg'].preg_replace('/\s+/', '', $time.$model->image);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_ticketimg'].$time.$model->image;
+                        $file_ext =  pathinfo($model->image, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model->image=$s3_filename;
+													
 				} 
 				
 			if($model->save()){
