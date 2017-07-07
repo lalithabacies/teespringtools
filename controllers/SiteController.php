@@ -205,7 +205,7 @@ class SiteController extends Controller
 		$role = new Roles();
 		
 	if ($model->load(Yii::$app->request->post()) && $model->validate() && $role->load(Yii::$app->request->post())) {
-				
+			$model->status = 1;
             if($model->save())
             {      
 				$userrole = new UserRole();

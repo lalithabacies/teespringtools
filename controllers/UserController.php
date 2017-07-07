@@ -89,14 +89,20 @@ class UserController extends Controller
     {
         $model = new UserProfile();
 		
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			
-			$role = Roles::find()->where(['default_access'=>1])->one();
-			$userrole = new UserRole();
-			$userrole->roleid = $role->id;
-			$userrole->userid = $model->id;
-			$userrole->save();	
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+			$model->status = 1;
+			 if($model->save())
+            {
+				$role = Roles::find()->where(['default_access'=>1])->one();
+				$userrole = new UserRole();
+				$userrole->roleid = $role->id;
+				$userrole->userid = $model->id;
+				$userrole->save();	
+				return $this->redirect(['view', 'id' => $model->id]);
+			} else 
+			{
+				 return $this->render('create', [ 'model' => $model ]);
+			}
         } else {
             return $this->render('create', [
                 'model' => $model,
