@@ -93,4 +93,17 @@ class Roles extends ActiveRecord
         }
     }
     
+    /* User Define Function
+    * To Update Role's Status
+    * @Created:10/7/2017
+    */
+    public function updateStatusOnly($id, $status)
+    {
+        $table = self::tableName();
+        $connection = Yii::$app->getDb();
+        $sql = "UPDATE ".$table." SET status='".$status."' WHERE id='".$id."'";
+        $app = $connection->createCommand($sql);
+        $result = $app->queryAll();
+    }
+
 }

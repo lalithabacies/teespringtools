@@ -104,7 +104,9 @@ class RolesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post(),'Roles') && $model->save()) {          
+        if ($model->load(Yii::$app->request->post(),'Roles') && $model->save()) {
+            $data = Yii::$app->request->post();
+            $model->updateStatusOnly($id, $data['Roles']['status']);
             $this->redirect(array('roles/settings'));
         } else {
             return $this->render('update',array('model' => $model));
