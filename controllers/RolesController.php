@@ -13,7 +13,7 @@ use app\components\AccessRule; //custom accessRules
 use app\models\Roles;
 use app\models\RolesApp;
 use app\models\UserRole;
-use app\models\User;+
+use app\models\User;
 use yii\db\ActiveRecord;
 
 class RolesController extends Controller
