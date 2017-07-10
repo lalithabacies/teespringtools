@@ -16,6 +16,7 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
+	public $email;
 
     private $_user = false;
     private $uid;
@@ -90,6 +91,7 @@ class LoginForm extends Model
         $this->username = $params['username'];
         $this->password = $params['password'];
         $this->rememberMe = $params['rememberme'];
+		$this->email	= $params['email'];
           
         $connection = Yii::$app->getDb();
         $sql = 'SELECT * FROM tshirt_users WHERE username=:username AND password=:pass';
@@ -103,7 +105,7 @@ class LoginForm extends Model
             $isAdmin = false;
             //Set User Session
             $userSessionArray = array('username'=>$this->username,'password'=>$this->password,
-            'uid'=>$this->uid);
+            'uid'=>$this->uid,'email'=>$this->email);
             Yii::$app->session->set('custUserData',$userSessionArray);
             if($result[0]['id']==1 || $result[0]['id']==69) {
                 $isAdmin = true;

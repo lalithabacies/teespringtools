@@ -13,7 +13,7 @@ sell high quality product with no cost or risk. Teespring Tools is a
 suite of tools that will make your selling tasks easier and quicker to get done.</h4>
 
 <div id="loading" style="display:none;">
-		 <p><img src="images/loading.gif" /> Please Wait</p>
+		 <p><img src="https://s3-us-west-2.amazonaws.com/teespringtools/uploads/webimage/loading.gif"/> Please Wait</p>
 </div>
 	
 <?php 

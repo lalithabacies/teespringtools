@@ -5,11 +5,11 @@ use app\models\TshirtAccess;
 
 $this->title =  Yii::$app->params['sitetitle'];
 
-$per_page	=	25;
+$per_page	=	30;
 
 //$total_cnt	= count($users);
 $total_page	= ceil($total_cnt/$per_page);
-$pno = isset($_GET['pno'])?$_GET['pno']:'0';
+$pno = isset($_GET['pno'])?$_GET['pno']:'1';
 $contactSearch=isset($_GET['search'])?$_GET['search']:'';
 ?>
 
@@ -51,11 +51,11 @@ $contactSearch=isset($_GET['search'])?$_GET['search']:'';
 									for($p=1;$p<=$total_page;$p++)
 									{
 										$class='';
-										if($p==($pno+1))
+										if($p==($pno))
 											$class="class='active'";
 										?>
 										<li <?=$class ?>>
-										<?=Html::a($p,['access','pno'=>($p-1)])?>
+										<?=Html::a($p,['access','pno'=>$p])?>
 										</li>
 									<?php
 									}

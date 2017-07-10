@@ -106,7 +106,8 @@ class SiteController extends Controller
                 $params = array();
                 $params['username'] = Yii::$app->request->post('username');
                 $params['password'] = Yii::$app->request->post('userpass');
-                $params['_csrf'] = Yii::$app->request->post('_csrf');
+                $params['_csrf'] 	= Yii::$app->request->post('_csrf');
+				$params['email'] 	= Yii::$app->request->post('email');
                 $params['rememberme'] = True;            
                 $model = new LoginForm();
                 if ($model->setUserLogin($params)){                                     
@@ -120,18 +121,21 @@ class SiteController extends Controller
         }
     }
 	
-	public function actionAccess($pno='0',$search=''){
+	public function actionAccess($pno='1',$search=''){
 		
 
 		$access=AppList::find()->all();
+		$allusers =TshirtUsers::find()->all();
+		$offset = ($pno - 1) * 30 ;
+		
 		$users_query =TshirtUsers::find();
 		isset($search)?$users_query_where=$users_query->where(["like","username",$search]):'';
-		$users=$users_query_where->offset($pno)->limit(30)->all();
-		
+		$users=$users_query_where->offset($offset)->limit(30)->groupBy(['id'])->all();
+
 		return $this->render('access',[
 		    'app_arr'=>$access,
 			'users' =>$users,
-			'total_cnt'=>$users_query_where->count()
+			'total_cnt'=>count($allusers)
 		]);
 	}
 	
@@ -166,7 +170,7 @@ class SiteController extends Controller
 				$success	=	$addaccess;
 			}
 		}
-		echo $success;exit;
+		echo $success;
 	}
     public function actionLogout()
     {        
