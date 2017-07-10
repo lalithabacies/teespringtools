@@ -92,7 +92,7 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 			$model->status = 1;
 			$model->last_date = date('Y-m-d');
-		   if($model->save())
+			 if($model->save())
             {
 				$role = Roles::find()->where(['default_access'=>1])->one();
 				$userrole = new UserRole();
@@ -181,14 +181,13 @@ class UserController extends Controller
 	 public function actionEditMyProfile()
     {
         $model = $this->findModel(Yii::$app->user->id);
-		
-       if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
 			$model->last_date = date('Y-m-d');
 			if($model->save())
-            {
-				return $this->redirect(['view', 'id' => $model->id]);
-			} else {
-				return $this->render('update', [ 'model' => $model,]);
+            {				
+				return $this->redirect(['my-profile']);
+			 } else {
+               return $this->render('update', ['model' => $model,]);
 			}
         } else {
             return $this->render('editmyprofile', [

@@ -111,6 +111,7 @@ class BlogController extends Controller
                         $bucket = Yii::$app->params['aws_bucket'];
                         $keyname = Yii::$app->params['aws_keyname_blogimg'].preg_replace('/\s+/', '', $time.$model->blogimage);
                         $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_blogimg'].$time.$model->blogimage;
+
                         $file_ext =  pathinfo($model->blogimage, PATHINFO_EXTENSION);
                         $filepath = $path;			
                         $s = new Storage();
@@ -118,7 +119,6 @@ class BlogController extends Controller
                         $s3_filename = $result['ObjectURL'];  	
                         $model->blogimage=$s3_filename;			
 					
-								
 				} 
 				$model->createddate = $model->modifieddate = date('Y-m-d H:i:s');
 				$model->createdby = $model->modifiedby = Yii::$app->user->id;
