@@ -33,7 +33,7 @@ class HerokuTickets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'title', 'description', 'status'], 'required'],
+            [[ 'title', 'description'], 'required'],
             [['userid', 'appid', 'status'], 'integer'],
             [['title', 'description', 'image'], 'string'],
             [['created_date'], 'safe'],

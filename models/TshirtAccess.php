@@ -74,7 +74,7 @@ class TshirtAccess extends \yii\db\ActiveRecord
 		$rawData->bindParam(":updateId", $params['id']);
 		$rawData->bindParam(":status", $params['status']);
 		$rawData->bindParam(":roleId", $params['roleid']);
-		$data = $rawData->queryAll();	
+		$data = $rawData->execute();	
 		return $data;		
 	} 
 	
@@ -96,5 +96,21 @@ class TshirtAccess extends \yii\db\ActiveRecord
 		$row	=$data->queryOne();
 		return $row['id'];	
 				
+	}
+	
+	public function getAccessUser($params=null)
+	{		
+		$sql = "select * from tshirt_access where userid=:userid ";
+		if(!empty($params['appid']))
+			$sql .= " AND appid= :appid ";
+		
+		$rawData = Yii::$app->db->createCommand($sql);
+		$rawData->bindParam(":userid", $params['userid']);
+		
+		if(!empty($params['appid']))
+		$rawData->bindParam(":appid", $params['appid']);
+		
+		$data 	= $rawData->queryAll();	
+		return $data;		
 	}
 }

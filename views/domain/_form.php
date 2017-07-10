@@ -60,6 +60,9 @@ $items = array("1"=>"Public",'0'=>"Private");
    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		
+		<?= Html::a('Cancel', ['domain/index'], ['class'=>'btn btn-danger']) ?>
+		
     </div>
 
     <?php ActiveForm::end(); ?>

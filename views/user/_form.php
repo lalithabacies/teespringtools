@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 		
 	<?php } ?>
 	
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true,'readonly' => !$model->isNewRecord]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => '150','readonly' => !$model->isNewRecord]) ?>
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 

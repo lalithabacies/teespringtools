@@ -33,7 +33,7 @@ if(isset($sessioncheck) && !empty($sessioncheck)) { ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
-					<?= Html::a('Cancel', ['site/login'], ['class'=>'btn btn-primary']) ?>
+					<?= Html::a('Cancel', ['site/login'], ['class'=>'btn btn-danger']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

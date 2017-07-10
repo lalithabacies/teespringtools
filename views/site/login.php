@@ -91,6 +91,9 @@ suite of tools that will make your selling tasks easier and quicker to get done.
             </div>
             </form>
         </div>
-    </div>	
+    </div>
+		<div class="alert alert-warning" role="alert" style='display:none;' id='loginerror'>
+        <strong>Note!</strong> Invalid Login Credential.
+        </div>	
 </section>
 </div>
