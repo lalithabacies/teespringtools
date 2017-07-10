@@ -8,26 +8,35 @@ $( document ).ready(function() {
     $("#login").click(function(){
         var username = $("#username").val();
         var password = $("#password").val();
+		$('#loading').show();
+		alert('s');
         $("#username").css("border-color","");
         $("#password").css("border-color","");
         if(username==''){
             $("#username").css("border-color","red");
+			$('#loading').hide();
             return false;
         } else if(password==''){
             $("#password").css("border-color","red");
+			$('#loading').hide();
             return false;
         } else{            
             $("#password").val('');
+			
             $.ajax({
             url: url+'site/login',
             type: 'post',
             data: {username: username , userpass:password, _csrf:csrftoken},
-            success: function (data) {                
+            success: function (data) {   
+					alert(data);
                 if (data=='success'){   
-					adduserlog();				
-                    window.location.href = url;
+					adduserlog();                    
+					$('#loading').hide();
+					$('#loginerror').hide();
                 } else{
-                    console.log("Login Error");
+                    console.log("Invalid Login Credential");
+					$('#loginerror').show();
+					$('#loading').hide();
                 }
             }
             });
@@ -39,12 +48,13 @@ $( document ).ready(function() {
         $.ajax({
         url: url+'user/logfunction',
         type: 'get',
-        success: function (data) {                
-            if (data=='success'){                                    
-                console.log("Login log success");
+        success: function (data) {
+            if (data=='success'){
+                //console.log("Login log success");
+                window.location.href = url;
             } else{
                 console.log("Login log Error");
-            }	
+            }
         }
         });
 	}
