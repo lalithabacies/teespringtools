@@ -37,14 +37,15 @@ class UserProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'email', 'firstname', 'lastname', 'phone','confirmpassword'], 'required'],
+            [['username','email', 'firstname', 'lastname', 'phone'], 'required'],
+            [['username','email', 'firstname', 'lastname', 'phone','password','confirmpassword'], 'required','on' => ['apply_password']],
             [['created_date', 'last_date'], 'safe'],
             [['username', 'firstname', 'lastname'], 'string'],
 			[['username','password'] , 'string','max' => 20],
 			[['firstname', 'lastname'], 'string' ,'max' => 150],
 			[['password','confirmpassword'], 'string', 'min' => 6],
 			[['email'],'email'],
-			[['phone'], 'integer'],
+			[['phone'], 'string' ,'max' => 30],
 			['phone','validatePhoneno'],
 			
 			[['username'], 'unique','targetClass' => '\app\models\UserProfile', 'message' => 'This Username has already been taken.'],
@@ -55,6 +56,12 @@ class UserProfile extends \yii\db\ActiveRecord
         ];
     }
 
+	public function scenarios()
+    {
+		$scenarios = parent::scenarios();
+        $scenarios['apply_password'] = ['username','email', 'firstname', 'lastname', 'phone','password','confirmpassword'];//Scenario Values Only Accepted
+        return $scenarios;
+    }
 	
     /**
      * @inheritdoc
@@ -77,10 +84,11 @@ class UserProfile extends \yii\db\ActiveRecord
     }
 	
 	public function validatePhoneno(){
-		if(preg_match('/^[0-9-\/\s\d]+$/i',$this->phone) !==true){
-		$this->addError('phone', 'Only spaces and hyphens are allowed with numbers');
-		return false;
-		}
+		//if(preg_match('/^[0-9-\/\s\d]+$/i',$this->phone) !==true){
+	 	if(!preg_match('/^[0-9- ]+$/',$this->phone)){
+			$this->addError('phone', 'Only spaces and hyphens are allowed with numbers');
+			return false;			
+		} 		
 	}
 
 	public function getFullname(){	

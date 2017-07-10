@@ -10,12 +10,7 @@ $status_array = array(1=>"Opened",0=>"Closed");
 <div id="content" >
 	<section>
 		<div class="section-body contain-lg">
-		<?php
 		
-		if(isset($model)&& $model)
-		{
-			
-		?>
 			<div class="row">
 				<div class="col-md-12">
 					<div style="margin-bottom: 10px;">
@@ -124,7 +119,7 @@ $status_array = array(1=>"Opened",0=>"Closed");
 		
 							</div><!--end .col -->
 						</div><!--end .row -->
-		<?php } ?>						
+						
 	</div>
   </section>
 </div>						

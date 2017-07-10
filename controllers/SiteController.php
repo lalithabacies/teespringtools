@@ -170,7 +170,7 @@ class SiteController extends Controller
 				$success	=	$addaccess;
 			}
 		}
-		echo $success;
+		echo $success;exit;
 	}
     public function actionLogout()
     {        
@@ -206,7 +206,7 @@ class SiteController extends Controller
         }
 		$model = new UserProfile();
 		$role = new Roles();
-		
+		$model->scenario = 'apply_password';
 	if ($model->load(Yii::$app->request->post()) && $model->validate() && $role->load(Yii::$app->request->post())) {
 			$model->status = 1;
 			$model->last_date = date('Y-m-d');

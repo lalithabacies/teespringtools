@@ -125,7 +125,7 @@ class TicketController extends Controller
     {
         $model = new HerokuTickets();
 		$applist = AppList::find()->all();
-		
+		$model->scenario = 'create_ticket';
         if ($model->load(Yii::$app->request->post())) {
 				
 				$model->userid = Yii::$app->user->id;
@@ -155,10 +155,9 @@ class TicketController extends Controller
 				} 
 				
 			if($model->save()){
-				// return $this->redirect(['index']);
+				return $this->redirect(['index']);
 				 
-				
-				return $this->redirect(['view', 'id' => $model->id]);
+				//return $this->redirect(['view', 'id' => $model->id]);
 			} else 
 			{
 				return $this->render('create', ['model' => $model,'applist'=>$applist]);
@@ -179,6 +178,7 @@ class TicketController extends Controller
     {
         $model = $this->findModel($id);
 		$applist = AppList::find()->all();
+		$current_image = $model->image;
         if ($model->load(Yii::$app->request->post())) {
 			
 			//save image here
@@ -203,7 +203,11 @@ class TicketController extends Controller
                         $s3_filename = $result['ObjectURL'];  	
                         $model->image=$s3_filename;
 													
-				} 
+				}
+				else
+				{										
+					$model->image = $current_image;				
+				}				
 				
 			if($model->save()){
 				return $this->redirect(['index']);
@@ -264,27 +268,47 @@ class TicketController extends Controller
 				$model1->updated_date =  date('Y-m-d H:i:s');
 				
 			//save image here
-				$model1->attachment = UploadedFile::getInstance($model1, 'attachment');
+			/* 	$model1->attachment = UploadedFile::getInstance($model1, 'attachment');
 				
 				if(!empty($model1->attachment)) { 				
 					if(!$model1->uploadImage())
 						return;								
-				} 
-			  
-			if($model1->save()){
+				}  */
+				
+				$model1->attachment = UploadedFile::getInstance($model1, 'attachment');
+				
+				if(!empty($model1->attachment)) { 
+					/* if(!$model1->uploadImage())
+						return; */
 					
-				  $ticket->save();
-				  
+						$time = time();
+						$model1->attachment->saveAs(Yii::$app->params['web_ticketimg'].$time.$model1->attachment);
+                       
+						//$tmp_filename = $model1->attachment->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_ticketimg'].preg_replace('/\s+/', '', $time.$model1->attachment);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_ticketimg'].$time.$model1->attachment;
+                        $file_ext =  pathinfo($model1->attachment, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model1->attachment=$s3_filename;
+													
+				} 
+				
+				
+			  
+			if($model1->save()){					
+				  $ticket->save();				  
 				  return $this->redirect(['index']);
-			} else{				
+			} 
+			else{				
 				 return $this->render('ticketdisplay', ['model' => $model,'model1' => $model1,'ticket' => $ticket]);
 			}
         } else { 
-            return $this->render('ticketdisplay', [
-                'model' => $model,       
-                'model1' => $model1,       
-                'ticket' => $ticket,       
-            ]);
+            return $this->render('ticketdisplay', ['model' => $model,'model1' => $model1,'ticket' => $ticket,]);
         }
     }
  

@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\HerokuTickets;
 
+
 /**
  * HerokuTicketsSearch represents the model behind the search form about `app\models\HerokuTickets`.
  */
@@ -41,10 +42,23 @@ class HerokuTicketsSearch extends HerokuTickets
      */
     public function search($params,$extraprams="")
     {
-		if(empty($extraprams))
-			$query = HerokuTickets::find()->where(['status'=>1]);
-		else
-			$query = HerokuTickets::find()->where(['status'=>1,'appid'=>$extraprams]);
+		$userid = Yii::$app->user->id;
+		$usersession = Yii::$app->session;
+	
+		if(!empty($usersession['isAdmin']))
+		{
+			if(empty($extraprams))
+				$query = HerokuTickets::find()->where(['status'=>1])->orderBy("id DESC");
+			else
+				$query = HerokuTickets::find()->where(['status'=>1,'appid'=>$extraprams])->orderBy("id DESC");
+		}
+		else if(!empty($userid))
+		{
+			if(empty($extraprams))
+				$query = HerokuTickets::find()->where(['status'=>1,"userid"=>$userid])->orderBy("id DESC");
+			else
+				$query = HerokuTickets::find()->where(['status'=>1,"userid"=>$userid,'appid'=>$extraprams])->orderBy("id DESC");
+		}
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

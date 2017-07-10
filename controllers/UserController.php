@@ -88,7 +88,7 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new UserProfile();
-		
+		$model->scenario = 'apply_password';
         if ($model->load(Yii::$app->request->post())) {
 			$model->status = 1;
 			$model->last_date = date('Y-m-d');
@@ -184,12 +184,15 @@ class UserController extends Controller
 		
        if ($model->load(Yii::$app->request->post())) {
 			$model->last_date = date('Y-m-d');
+			$model->status =1;
+			
 			if($model->save())
             {
 				return $this->redirect(['view', 'id' => $model->id]);
 			} else {
 				return $this->render('update', [ 'model' => $model,]);
 			}
+			
         } else {
             return $this->render('editmyprofile', [
                 'model' => $model,
