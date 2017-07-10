@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Tshirt Videos';
 $this->params['breadcrumbs'][] = $this->title;
+$status_array = array(1=>"Enable",0=>"Disable");	
 ?>
 <div class="tshirt-videos-index">
 
@@ -26,9 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'videotitle',
-            'emdedurl:url',
+            'emdedurl:text',
             'createdon',
-            'status',
+            [
+				'attribute' => 'status',
+				'value' => function ($model)use($status_array){
+					return ($model->status == 1)?"Enable":"Disable";
+                                },		
+				 'filter' => Html::activeDropDownList($searchModel, 'status',$status_array ,['class'=>'form-control input-sm','prompt' => '--status--']), 
+			
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

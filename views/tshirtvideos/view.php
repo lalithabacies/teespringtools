@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TshirtVideos */
 
-$this->title = $model->id;
+$this->title = $model->videotitle;
 $this->params['breadcrumbs'][] = ['label' => 'Tshirt Videos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,11 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'videotitle',
             'emdedurl:url',
             'createdon',
-            'status',
+            [
+				 'label'=>'Status',
+				 'value' =>($model->status == 1)?"Enable":"Disable",
+			]
         ],
     ]) ?>
 
