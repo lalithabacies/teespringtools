@@ -116,8 +116,8 @@ $status_array = array(1=>"Opened",0=>"Closed");
 									
 
 									<div class="form-group">
-									   <a href="<?=Url::to(["ticket/index"]); ?>" class="btn btn-primary ">CANCEL</a>
 										<?= Html::submitButton('Submit', ['class' => 'btn btn-success']) ?>
+										<a href="<?=Url::to(["ticket/index"]); ?>" class="btn btn-danger ">CANCEL</a>
 									</div>
 
 									<?php ActiveForm::end(); ?>

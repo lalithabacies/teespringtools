@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+$session = Yii::$app->session;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\HerokuTicketsSearch */
@@ -17,7 +18,9 @@ $status_array = array(1=>"Opened",0=>"Closed");
 	
 <div class="row">		
 		<div class="col-md-9" >
-			
+		<?php if(empty($session['isAdmin'])){ ?>	
+			<?= Html::a('Create Tickets', ['create'], ['class' => 'btn btn-success']) ?>
+		<?php } ?>	
 		</div>
 		<div class="col-md-3" >
 		
@@ -88,7 +91,11 @@ $status_array = array(1=>"Opened",0=>"Closed");
             // 'image:ntext',
         
 
-            ['class' => 'yii\grid\ActionColumn','template' => '{update}{delete}',],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{update}{delete}',
+				'visible' => (!empty($session['isAdmin']))?true:false,
+			],
         ],
     ]); ?>
 </div>

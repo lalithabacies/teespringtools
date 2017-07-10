@@ -36,7 +36,7 @@ $this->title =  Yii::$app->params['sitetitle'];
 												?>
 												<tr>
 													<td style="display:none;" >
-														<img class="img-circle img_style" src="<?php echo $tmp->image_link; ?>"/>
+														
 													</td>
 													<td>
 														<?php echo $tmp->name; ?></br></br>

@@ -28,6 +28,14 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => false,
+		 	'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.gmail.com',
+			'username' => 'arivazhagan0117@gmail.com',
+            'password' => 'Arivu@!@#Vega',
+            'port' => '587',
+            'encryption' => 'tls', 
+                        ],  
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -39,7 +47,7 @@ $config = [
             ],
         ],
         'db' => $db,
-		'awssdk' => [
+        'awssdk' => [
             'class' => 'fedemotta\awssdk\AwsSdk',
             'credentials' => [ //you can use a different method to grant access
                 'key' => 'AKIAJTJ744YGDWF7CXDQ',
@@ -48,13 +56,13 @@ $config = [
             'region' => 'us-west-2', //i.e.: 'us-east-1'
             'version' => 'latest', //i.e.: 'latest'
         ],
-        
         'urlManager' => [            
             'enablePrettyUrl' => true,
             'showScriptName' => false,            
             'rules' => [                          
             ],
-        ],       
+        ],
+        
     ],
     'params' => $params,
 ];

@@ -128,11 +128,9 @@ class SiteController extends Controller
 		isset($search)?$users_query_where=$users_query->where(["like","username",$search]):'';
 		$users=$users_query_where->offset($pno)->limit(30)->all();
 		
-		$accessUser = TshirtAccess::find()->all();
 		return $this->render('access',[
 		    'app_arr'=>$access,
 			'users' =>$users,
-			'acc_arr'=>$accessUser,
 			'total_cnt'=>$users_query_where->count()
 		]);
 	}

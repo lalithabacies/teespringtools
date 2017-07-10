@@ -92,10 +92,17 @@ $session = Yii::$app->session;
 						</a>
 					</li>	
 
-					<li>
+					<!-- <li>
 						<a href="<?= Url::to(["managekey/index"]); ?>" >
 							<div class="gui-icon"><i class="fa fa-key"></i></div>
 							<span class="title">Manage Key</span>
+						</a>
+					</li> -->
+					
+					<li>
+						<a href="<?= Url::to(["tshirtvideos/index"]); ?>" >
+							<div class="gui-icon"><i class="fa fa-video-camera"></i></div>
+							<span class="title">Video Management</span>
 						</a>
 					</li>
 					
@@ -112,6 +119,7 @@ $session = Yii::$app->session;
 							<span class="title">User log</span>
 						</a>
 					</li>
+					
 					
 					<?php } ?>
 					

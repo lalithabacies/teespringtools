@@ -12,6 +12,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\Storage;
+use yii\filters\AccessControl;
+use yii\web\Session;
+use app\components\AccessRule;
 
 //use app\models\TicketsMessage;
 /**
@@ -25,6 +28,36 @@ class TicketController extends Controller
     public function behaviors()
     {
         return [
+			'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(), //custom accessRules
+                ],
+                'only' => ['create','view', 'delete', 'update','ticket-display'], //only be applied to
+                'rules' => [                    
+                    [
+                        'allow' => true,
+                        'actions' => [ 'view', 'delete', 'update','ticket-display','index'],
+                        'roles' => ['admin'],
+                    ],
+					[
+                        'allow' => false,
+                        'actions' => ['create'],
+                        'roles' => ['admin'],
+                    ],
+					[
+                    'allow' => false,
+					'actions' => ['view', 'delete', 'update'],
+                    'roles' => ['@'],
+					],
+					[
+                        'allow' => true,
+                        'actions' => ['create','ticket-display','index'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+			
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -88,18 +121,53 @@ class TicketController extends Controller
      * @return mixed
      */
 	 
- /*    public function actionCreate()
+     public function actionCreate()
     {
         $model = new HerokuTickets();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+		$applist = AppList::find()->all();
+		
+        if ($model->load(Yii::$app->request->post())) {
+				
+				$model->userid = Yii::$app->user->id;
+				$model->status = 1;
+			//save image here
+				$model->image = UploadedFile::getInstance($model, 'image');
+				
+				if(!empty($model->image)) { 
+					/* if(!$model->uploadImage())
+						return; */
+					
+						$time = time();
+						$model->image->saveAs(Yii::$app->params['web_ticketimg'].$time.$model->image);
+                       
+						//$tmp_filename = $model->image->tempName;
+						
+                        $bucket = Yii::$app->params['aws_bucket'];
+                        $keyname = Yii::$app->params['aws_keyname_ticketimg'].preg_replace('/\s+/', '', $time.$model->image);
+                        $path=\Yii::$app->basePath.'/web/'.Yii::$app->params['web_ticketimg'].$time.$model->image;
+                        $file_ext =  pathinfo($model->image, PATHINFO_EXTENSION);
+                        $filepath = $path;			
+                        $s = new Storage();
+                        $result = $s->upload($bucket,$keyname,$filepath);
+                        $s3_filename = $result['ObjectURL'];  	
+                        $model->image=$s3_filename;
+													
+				} 
+				
+			if($model->save()){
+				// return $this->redirect(['index']);
+				 
+				
+				return $this->redirect(['view', 'id' => $model->id]);
+			} else 
+			{
+				return $this->render('create', ['model' => $model,'applist'=>$applist]);
+			}				
+           
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model,'applist'=>$applist ]);
         }
-    } */
+    } 
 
     /**
      * Updates an existing HerokuTickets model.
@@ -110,7 +178,7 @@ class TicketController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+		$applist = AppList::find()->all();
         if ($model->load(Yii::$app->request->post())) {
 			
 			//save image here
@@ -138,15 +206,13 @@ class TicketController extends Controller
 				} 
 				
 			if($model->save()){
-				
+				return $this->redirect(['index']);
 			} else {
-			
-			}			
-            return $this->redirect(['index']);
+				return $this->render('update', ['model' => $model,'applist'=>$applist]);
+			}				
+            
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            return $this->render('update', ['model' => $model,'applist'=>$applist]);
         }
     }
 

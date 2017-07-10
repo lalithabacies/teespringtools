@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 use yii\helpers\Html;
+use app\models\TshirtAccess;
 
 $this->title =  Yii::$app->params['sitetitle'];
 
@@ -119,10 +120,11 @@ $contactSearch=isset($_GET['search'])?$_GET['search']:'';
 											<tbody>
 
 												<?php
+												$tshirtaccess = new TshirtAccess();
 												for($i=0;$i<count($users);$i++)
 												{
 													$data['userid']	=	$users[$i]['id'];
-													//$acc_arr		=	access::getAccessUser($data);
+													$acc_arr		=	$tshirtaccess->getAccessUser($data);
 													$access_appid	=	array();
 													$access_id		=	array();
 													if($acc_arr)
@@ -141,6 +143,7 @@ $contactSearch=isset($_GET['search'])?$_GET['search']:'';
 													<tr>
 														<td><?php echo $users[$i]['username']; ?></td>
 														<?php
+
 														for($j=0;$j<count($app_arr);$j++)
 														{
 															$checked	= $accid =	"";

@@ -39,10 +39,13 @@ class UserProfile extends \yii\db\ActiveRecord
         return [
             [['username', 'password', 'email', 'firstname', 'lastname', 'phone','confirmpassword'], 'required'],
             [['created_date', 'last_date'], 'safe'],
-            [['username', 'firstname', 'lastname'], 'string', 'max' => 150],
+            [['username', 'firstname', 'lastname'], 'string'],
+			[['username','password'] , 'string','max' => 20],
+			[['firstname', 'lastname'], 'string' ,'max' => 150],
 			[['password','confirmpassword'], 'string', 'min' => 6],
 			[['email'],'email'],
 			[['phone'], 'integer'],
+			['phone','validatePhoneno'],
 			
 			[['username'], 'unique','targetClass' => '\app\models\UserProfile', 'message' => 'This Username has already been taken.'],
 		
@@ -73,7 +76,12 @@ class UserProfile extends \yii\db\ActiveRecord
         ];
     }
 	
-	
+	public function validatePhoneno(){
+		if(preg_match('/^[0-9-\/\s\d]+$/i',$this->phone) !==true){
+		$this->addError('phone', 'Only spaces and hyphens are allowed with numbers');
+		return false;
+		}
+	}
 
 	public function getFullname(){	
 		$fullname = "";
@@ -259,4 +267,33 @@ class UserProfile extends \yii\db\ActiveRecord
         return null;
     }
 	
+	public function deleteUsers($id)
+    {
+		$connection 	= Yii::$app->getDb();
+		$tshirtaccessTable 	= TshirtAccess::tableName();
+        $userRoleTable 		= UserRole::tableName();
+        $trackUserTable		= TrackUsers::tableName(); 
+		$userActivityTable 	= UsersActivity::tableName();
+        $tshirtUserMetaTable= TshirtUserMeta::tableName();
+		
+		$transaction 	= $connection->beginTransaction();
+        try {
+			$sql1 = "DELETE FROM ".$tshirtaccessTable." WHERE userid=:userid";
+			$sql2 = "DELETE FROM ".$userRoleTable." WHERE userid=:userid";
+			$sql3 = "DELETE FROM ".$trackUserTable." WHERE userid=:userid";
+			$sql4 = "DELETE FROM ".$userActivityTable." WHERE userid=:userid";
+			$sql5 = "DELETE FROM ".$tshirtUserMetaTable." WHERE userid=:userid";
+			
+			$connection->createCommand($sql1)->bindValue(':userid',$id)->execute();
+			$connection->createCommand($sql2)->bindValue(':userid',$id)->execute();
+			$connection->createCommand($sql3)->bindValue(':userid',$id)->execute();
+			$connection->createCommand($sql4)->bindValue(':userid',$id)->execute();
+			$connection->createCommand($sql5)->bindValue(':userid',$id)->execute();
+			
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            //throw $e;
+        }
+    }
 }
