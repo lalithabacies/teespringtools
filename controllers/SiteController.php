@@ -143,7 +143,8 @@ class SiteController extends Controller
 		$params['appid'] 	=	$post["appid"];
 		$params['status']	=	$post["status"];
 		$params['id']		=	$post["accid"];
-		$customaccess	 	=	TshirtAccess::getCustomRoleAccess($params);
+		$tshirtAccess		= 	new TshirtAccess();
+		$customaccess	 	=	$tshirtAccess->getCustomRoleAccess($params);
 		if(empty($customaccess))
 			$params['roleid']=null;
 		else
@@ -151,7 +152,7 @@ class SiteController extends Controller
 		$flag				=	$post["flag"];
 		if($post["accid"] && $flag=='update')	
 		{
-			$updateaccess	 =	TshirtAccess::updateAccess($params);
+			$updateaccess	 =	$tshirtAccess->updateAccess($params);
 			if($updateaccess==1)
 			{
 				$success	=	$params['id'];
@@ -159,7 +160,7 @@ class SiteController extends Controller
 		}
 		else
 		{
-			$addaccess	 =	TshirtAccess::addAccess($params);
+			$addaccess	 =	$tshirtAccess->addAccess($params);
 			if($addaccess)
 			{
 				$success	=	$addaccess;
