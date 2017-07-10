@@ -13,7 +13,7 @@ use app\components\AccessRule; //custom accessRules
 use app\models\Roles;
 use app\models\RolesApp;
 use app\models\UserRole;
-use app\models\User;+
+use app\models\User;
 use yii\db\ActiveRecord;
 
 class RolesController extends Controller
@@ -104,7 +104,9 @@ class RolesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post(),'Roles') && $model->save()) {          
+        if ($model->load(Yii::$app->request->post(),'Roles') && $model->save()) {
+            $data = Yii::$app->request->post();
+            $model->updateStatusOnly($id, $data['Roles']['status']);
             $this->redirect(array('roles/settings'));
         } else {
             return $this->render('update',array('model' => $model));

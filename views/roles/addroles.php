@@ -22,13 +22,13 @@ $userData = Yii::$app->session->get('custUserData');
     <div class="form-group col-md-12">
     <div class="input-group col-md-6">
     <div class="input-group-content">
-    <input type="text" name="Roles[rolename]" class="form-control" value="">   
-    <label for="rolename">Rolename</label>
+    <label for="rolename" class="control-label">Rolename</label>
+    <input type="text" name="Roles[rolename]" class="form-control" value="">    
     </div>
     </div>
     </div><!--end .form-group -->
     <div class="form-group col-md-3">    
-    <div><label for="rolename">Status</label></div>
+    <div><label for="rolename" class="control-label">Status</label></div>
     <select class="form-control " name="Roles[status]" id="rolestatus">
     <option value="active">active</option>
     <option value="inactive">inactive</option>
