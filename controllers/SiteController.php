@@ -107,7 +107,6 @@ class SiteController extends Controller
                 $params['username'] = Yii::$app->request->post('username');
                 $params['password'] = Yii::$app->request->post('userpass');
                 $params['_csrf'] 	= Yii::$app->request->post('_csrf');
-				$params['email'] 	= Yii::$app->request->post('email');
                 $params['rememberme'] = True;            
                 $model = new LoginForm();
                 if ($model->setUserLogin($params)){                                     
@@ -130,7 +129,7 @@ class SiteController extends Controller
 		
 		$users_query =TshirtUsers::find();
 		isset($search)?$users_query_where=$users_query->where(["like","username",$search]):'';
-		$users=$users_query_where->offset($offset)->limit(30)->groupBy(['id'])->all();
+		$users=$users_query_where->offset($offset)->limit(30)->groupBy(['id'])->orderBy('id ASC')->all();
 
 		return $this->render('access',[
 		    'app_arr'=>$access,
@@ -170,7 +169,7 @@ class SiteController extends Controller
 				$success	=	$addaccess;
 			}
 		}
-		echo $success;
+		echo $success;exit;
 	}
     public function actionLogout()
     {        
@@ -206,7 +205,7 @@ class SiteController extends Controller
         }
 		$model = new UserProfile();
 		$role = new Roles();
-		
+		$model->scenario = 'apply_password';
 	if ($model->load(Yii::$app->request->post()) && $model->validate() && $role->load(Yii::$app->request->post())) {
 			$model->status = 1;
 			$model->last_date = date('Y-m-d');

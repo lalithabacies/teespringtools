@@ -31,7 +31,8 @@ class TshirtVideos extends \yii\db\ActiveRecord
         return [
             [['createdon'], 'safe'],
             [['status'], 'integer'],
-            [['videotitle', 'emdedurl'], 'string', 'max' => 100],
+            [['videotitle'], 'string', 'max' => 150],
+            [[ 'emdedurl'], 'string', 'max' => 500],
         ];
     }
 
@@ -42,9 +43,9 @@ class TshirtVideos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'videotitle' => 'Videotitle',
-            'emdedurl' => 'Emdedurl',
-            'createdon' => 'Createdon',
+            'videotitle' => 'Video Title',
+            'emdedurl' => 'Embed Url',
+            'createdon' => 'Created on',
             'status' => 'Status',
         ];
     }

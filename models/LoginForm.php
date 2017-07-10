@@ -16,10 +16,11 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-	public $email;
+	
 
     private $_user = false;
     private $uid;
+	private $email;
 
     /**
      * @return array the validation rules.
@@ -91,7 +92,6 @@ class LoginForm extends Model
         $this->username = $params['username'];
         $this->password = $params['password'];
         $this->rememberMe = $params['rememberme'];
-		$this->email	= $params['email'];
           
         $connection = Yii::$app->getDb();
         $sql = 'SELECT * FROM tshirt_users WHERE username=:username AND password=:pass';
@@ -102,6 +102,7 @@ class LoginForm extends Model
         if (isset($result[0]['username']) && $result[0]['username']==$this->username){
             $username = $result[0]['username'];         
             $this->uid = $result[0]['id'];
+			$this->email= $result[0]['email'];
             $isAdmin = false;
             //Set User Session
             $userSessionArray = array('username'=>$this->username,'password'=>$this->password,

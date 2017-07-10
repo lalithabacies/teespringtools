@@ -33,13 +33,22 @@ class HerokuTickets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'title', 'description'], 'required'],
+            [['title', 'description'], 'required'],
+            [['image'], 'required','on' => ['create_ticket']],
             [['userid', 'appid', 'status'], 'integer'],
             [['title', 'description', 'image'], 'string'],
             [['created_date'], 'safe'],
         ];
     }
 
+	
+	public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['create_ticket'] = ['image','description','title','appid'];//Scenario Values Only Accepted
+        return $scenarios;
+    }
+	
     /**
      * @inheritdoc
      */
@@ -65,9 +74,9 @@ class HerokuTickets extends \yii\db\ActiveRecord
         return $this->hasOne(UserProfile::className(), ['id' => 'userid']);
     }
 	
-	public function uploadImage(){
+/* 	public function uploadImage(){
 			$this->image->saveAs('uploads/ticketimage/'.time().$this->image->baseName.'.' .$this->image->extension);
 			$this->image = 'uploads/ticketimage/'.time().$this->image->baseName.'.'.$this->image->extension;
 			return true;
-	}
+	} */
 }

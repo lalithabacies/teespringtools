@@ -2,6 +2,11 @@
 /* @var $this yii\web\View */
 
 $this->title =  Yii::$app->params['sitetitle'];
+$loginsession     =  \Yii::$app->session->get('custUserData');
+$cookies=Yii::$app->getRequest()->getCookies();
+$_identity =$cookies['_identity'];
+$tokenarr = explode(",",$_identity);
+$token = str_replace('"','',$tokenarr[1]);
 ?>
 
 
@@ -44,7 +49,7 @@ $this->title =  Yii::$app->params['sitetitle'];
 													</td>
 													<td> 
 													    
-														<a target="_blank" href="<?php echo $tmp->link; ?>" style="text-decoration:none;">	
+														<a target="_blank" href="<?php echo $tmp->link; ?>?mail=<?=base64_encode($loginsession['email'])."token=".addslashes($token)?>" style="text-decoration:none;">	
 														   <li class="md md-send"><span id="color_img"><img src="<?php echo \Yii::$app->homeUrl; ?>css/img/rocket.png"></span>
 																	
 															</li>

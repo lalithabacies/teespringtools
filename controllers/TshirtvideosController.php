@@ -84,12 +84,16 @@ class TshirtvideosController extends Controller
     {
         $model = new TshirtVideos();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+			$model->createdon = date('Y-m-d H:i:s');
+			if($model->save())
+            {
+				return $this->redirect(['view', 'id' => $model->id]);
+			} else {
+                return $this->render('create', ['model' => $model,]);
+			}
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model,]);
         }
     }
 
@@ -103,12 +107,16 @@ class TshirtvideosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->createdon = date('Y-m-d H:i:s');
+			if($model->save())
+            {
+				return $this->redirect(['view', 'id' => $model->id]);
+			} else {
+                return $this->render('update', ['model' => $model,]);
+			}
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            return $this->render('update', ['model' => $model,]);
         }
     }
 

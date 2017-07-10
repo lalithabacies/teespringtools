@@ -9,7 +9,6 @@ $( document ).ready(function() {
         var username = $("#username").val();
         var password = $("#password").val();
 		$('#loading').show();
-		alert('s');
         $("#username").css("border-color","");
         $("#password").css("border-color","");
         if(username==''){
@@ -28,8 +27,6 @@ $( document ).ready(function() {
             type: 'post',
             data: {username: username , userpass:password, _csrf:csrftoken},
             success: function (data) {   
-					alert(data);
-					
                 if (data=='success'){   
 					adduserlog();                    
 					$('#loading').hide();

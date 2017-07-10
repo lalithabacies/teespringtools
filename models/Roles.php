@@ -76,7 +76,7 @@ class Roles extends ActiveRecord
         parent::afterDelete();
         $accessTable = TshirtAccess::tableName();
         $userRoleTable = UserRole::tableName();
-        $rolesAppTable = RolesApp::tableName();   
+        $rolesAppTable = RolesApp::tableName();
         $connection = Yii::$app->getDb();
         $transaction = $connection->beginTransaction();
         try {
@@ -101,7 +101,7 @@ class Roles extends ActiveRecord
     {
         $table = self::tableName();
         $connection = Yii::$app->getDb();
-        $sql = "UPDATE ".$table." SET status='".$status."' WHERE id='".$id."'";
+        $sql = "UPDATE ".$table." SET status='".$status."' WHERE id='".$id."'";     
         $app = $connection->createCommand($sql);
         $result = $app->queryAll();
     }
