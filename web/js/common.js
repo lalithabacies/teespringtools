@@ -29,6 +29,7 @@ $( document ).ready(function() {
             data: {username: username , userpass:password, _csrf:csrftoken},
             success: function (data) {   
 					alert(data);
+					
                 if (data=='success'){   
 					adduserlog();                    
 					$('#loading').hide();
