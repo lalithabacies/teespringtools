@@ -43,8 +43,8 @@ class TshirtVideos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'videotitle' => 'Video Title',
-            'emdedurl' => 'Embed Url',
+            'videotitle' => 'Title',
+            'emdedurl' => 'Embed Link',
             'createdon' => 'Created on',
             'status' => 'Status',
         ];
