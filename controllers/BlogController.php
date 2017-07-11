@@ -69,7 +69,7 @@ class BlogController extends Controller
 	public function actionIndexBlog()
     {
         $searchModel = new BlogsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchindexblog(Yii::$app->request->queryParams);
         return $this->render('index_blog', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

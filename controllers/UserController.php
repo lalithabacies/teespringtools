@@ -19,7 +19,6 @@ use app\models\UsersActivity;
 use app\models\TshirtUserMeta;
 
 /**
-
  * UserController implements the CRUD actions for UserProfile model.
  */
 class UserController extends Controller

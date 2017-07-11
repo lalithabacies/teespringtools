@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\AppList;
 
 /**
  * This is the model class for table "tshirt_access".
@@ -113,4 +114,12 @@ class TshirtAccess extends \yii\db\ActiveRecord
 		$data 	= $rawData->queryAll();	
 		return $data;		
 	}
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserAppList()
+    {
+        return $this->hasOne(AppList::className(), ['id' => 'appid']);
+    }
 }

@@ -23,11 +23,11 @@ $status_array = array(1=>"Opened",0=>"Closed");
 		<?php } ?>	
 		</div>
 		<div class="col-md-3" >
-		
+		<?php if(!empty($session['isAdmin'])){ ?>	
 			<select class="form-control pull-right" name="app_filter" id="app_filter">
 				<option value="">---Select Apps---</option>
 				<?php
-						if($model)
+				if($model)
 						{
 							foreach($model as $tmp)
 							{
@@ -37,8 +37,26 @@ $status_array = array(1=>"Opened",0=>"Closed");
 									echo "<option value='".$tmp->id."'>".$tmp->name."</option>";
 							}								
 						}
+						
 					?>
 			</select>
+			<?php } else if(Yii::$app->user->id){ ?>	
+			<select class="form-control pull-right" name="app_filter" id="app_filter">
+				<option value="">---Select Apps---</option>
+				<?php
+						if($model)
+						{
+							foreach($model as $tmp)
+							{
+								if(isset($appid) && !empty($appid) && ($appid == $tmp->userAppList->id))
+									echo "<option selected='selected' value='".$tmp->userAppList->id."'>".$tmp->userAppList->name."</option>";
+								else
+									echo "<option value='".$tmp->userAppList->id."'>".$tmp->userAppList->name."</option>";
+							}								
+						}
+					?>
+			</select>
+			<?php } ?>	
 		</div>
     </div>
 			

@@ -122,7 +122,6 @@ class SiteController extends Controller
 	
 	public function actionAccess($pno='1',$search=''){
 		
-
 		$access=AppList::find()->all();
 		$allusers =TshirtUsers::find()->all();
 		$offset = ($pno - 1) * 30 ;
@@ -186,9 +185,16 @@ class SiteController extends Controller
 		    $this->layout = 'beforeLogin';
             return $this->render('login');
 		} else{
-            $userIdentity = Yii::$app->user->identity;
-		    $checkdata = AppList::find()->all();
-		    return $this->render('dashboard',[ 'checkdata' => $checkdata ]);
+			$session = Yii::$app->session;
+             if(!empty($session['isAdmin'])){ 
+				$checkdata = AppList::find()->orderBy('name ASC')->all();
+				return $this->render('dashboard',[ 'checkdata' => $checkdata ]);
+			 } else if(Yii::$app->user->id)
+			 {
+				 $checkdata = TshirtAccess::find()->joinWith('userAppList')->where(['userid'=>Yii::$app->user->id,'status'=>1])->orderBy('name ASC')->all();
+				 return $this->render('dashboard_home',[ 'checkdata' => $checkdata ]);
+			 }
+		    
         }        
     }     
 

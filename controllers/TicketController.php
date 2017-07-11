@@ -6,6 +6,7 @@ use Yii;
 use app\models\HerokuTickets;
 use app\models\AppList;
 use app\models\TicketsMessage;
+use app\models\TshirtAccess;
 use app\models\search\HerokuTicketsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -93,7 +94,16 @@ class TicketController extends Controller
 		$extraprams = $id;
         $searchModel = new HerokuTicketsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$extraprams);
-		$model = AppList::find()->all();
+
+		$session = Yii::$app->session;
+        if(!empty($session['isAdmin'])){ 
+			$model = AppList::find()->orderBy('name ASC')->all();
+		} 
+		else if(Yii::$app->user->id)
+		{
+			$model = TshirtAccess::find()->joinWith('userAppList')->where(['userid'=>Yii::$app->user->id,'status'=>1])->orderBy('name ASC')->all();
+		}
+		
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -124,7 +134,16 @@ class TicketController extends Controller
      public function actionCreate()
     {
         $model = new HerokuTickets();
-		$applist = AppList::find()->all();
+		
+		$session = Yii::$app->session;
+        if(!empty($session['isAdmin'])){ 
+			$applist = AppList::find()->orderBy('name ASC')->all();
+		} 
+		else if(Yii::$app->user->id)
+		{
+			$applist = TshirtAccess::find()->joinWith('userAppList')->where(['userid'=>Yii::$app->user->id,'status'=>1])->orderBy('name ASC')->all();
+		}
+		
 		$model->scenario = 'create_ticket';
         if ($model->load(Yii::$app->request->post())) {
 				
@@ -177,7 +196,15 @@ class TicketController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-		$applist = AppList::find()->all();
+		$session = Yii::$app->session;
+        if(!empty($session['isAdmin'])){ 
+			$applist = AppList::find()->orderBy('name ASC')->all();
+		} 
+		else if(Yii::$app->user->id)
+		{
+			$applist = TshirtAccess::find()->joinWith('userAppList')->where(['userid'=>Yii::$app->user->id,'status'=>1])->orderBy('name ASC')->all();
+		}
+		
 		$current_image = $model->image;
         if ($model->load(Yii::$app->request->post())) {
 			

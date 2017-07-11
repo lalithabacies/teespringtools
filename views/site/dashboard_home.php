@@ -44,12 +44,14 @@ $token = str_replace('"','',$tokenarr[1]);
 														
 													</td>
 													<td>
-														<?php echo $tmp->name; ?></br></br>
-														<?php echo $tmp->description; ?>
+														<?php echo $tmp->userAppList->name; ?></br></br>
+														<?php echo $tmp->userAppList->description; ?>
 													</td>
 													<td> 
-														<a target="_blank" href="<?php echo $tmp->link; ?>?mail=<?=base64_encode($loginsession['email'])."&token=".addslashes($token)?>" style="text-decoration:none;">	
-														    <li class="md md-send"><span id="color_img"><img src="<?php echo \Yii::$app->homeUrl; ?>css/img/rocket.png"></span>
+													    
+														<a target="_blank" href="<?php echo $tmp->userAppList->link; ?>?mail=<?=base64_encode($loginsession['email'])."token=".addslashes($token)?>" style="text-decoration:none;">	
+														   <li class="md md-send"><span id="color_img"><img src="<?php echo \Yii::$app->homeUrl; ?>css/img/rocket.png"></span>
+																	
 															</li>
 														</a>
 													</td>
